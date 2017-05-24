@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- 设置属性 -->
+	<settings>
+		<!--  mybatis 二级缓存 -->
+		<setting name="cacheEnabled" value="true"/>
+		
+		<!-- true使用延迟加载，false禁用延迟加载。默认为true -->
+    	<setting name="lazyLoadingEnabled" value="true"/>
+    	
+    	<!-- true：启用时，当延迟加载开启时访问对象中一个懒对象属性时，将完全加载这个对象的所有懒对象属性。
+    		false：当延迟加载时，按需加载对象属性（即访问对象中一个懒对象属性，不会加载对象中其他的懒对象属性）。默认为true -->
+    	<setting name="aggressiveLazyLoading" value="false"/>
+	</settings>
+	
+	<!-- 分页插件 -->
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageHelper">
+			<property name="dialect" value="mysql"/>
+			<property name="pageSizeZero" value="true"/>
+			<property name="reasonable" value="true"/>
+		</plugin>
+	</plugins>
+	
+</configuration>

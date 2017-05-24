@@ -1,0 +1,312 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.xy</groupId>
+	<artifactId>xy-web</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>xy-web</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source> <!-- 源代码使用的开发版本 -->
+					<target>1.8</target> <!-- 需要生成的目标class文件的编译版本 -->
+					<encoding>UTF8</encoding>
+				</configuration>
+			</plugin>
+
+			<!-- mvn install时跳过测试 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18.1</version>
+				<configuration>
+					<skipTests>true</skipTests>
+					<forkMode>once</forkMode>
+					<argLine>-Dfile.encoding=UTF-8</argLine>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>nexus</id>
+			<name>Nexus</name>
+			<url>http://10.0.202.86:8081/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>Nexus</name>
+			<url>http://10.0.202.86:8081/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<junit.version>4.10</junit.version>
+		<spring.version>4.2.5.RELEASE</spring.version>
+		<slf4j.version>1.7.12</slf4j.version>
+		<logback.version>1.1.3</logback.version>
+		<disconf.version>2.6.36-hx</disconf.version>
+		<hwcommon.version>1.2.9</hwcommon.version>
+		<sqlserver.version>4.0</sqlserver.version>
+		<mysql.version>5.1.38</mysql.version>
+		<druid.version>1.0.27</druid.version>
+		<mybatis.version>3.4.1</mybatis.version>
+		<hibernate.version>4.3.1.Final</hibernate.version>
+		<elastic-job.version>1.1.1</elastic-job.version>
+		<dubbo-ext.version>1.0.6</dubbo-ext.version>
+		<jackson.version>2.8.1</jackson.version>
+		<validation.version>1.0.0.GA</validation.version>
+		<kafka.version>0.9.0.1</kafka.version>
+		<javax.ws.version>2.0</javax.ws.version>
+		<vhall.version>1.0.2</vhall.version>
+		<raven.version>7.8.0</raven.version>
+
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- spring -->
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- slf4j -->
+
+		<!-- logback -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<!-- logback -->
+
+		<!-- mysql -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+		<!-- mysql -->
+
+		<!-- druid 
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid.version}</version>
+		</dependency>-->
+		<!-- druid -->
+
+		<!-- mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.3.0</version>
+		</dependency>
+		<!-- mybatis -->
+
+		<!-- pagehelper -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>4.1.6</version>
+		</dependency>
+		<!-- pagehelper -->
+
+		<!-- hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<!-- hibernate -->
+
+		<!-- jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<!-- jackson -->
+
+		<!-- javax.ws.rs start -->
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>${javax.ws.version}</version>
+		</dependency>
+		<!-- javax.ws.rs end -->
+		
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjrt</artifactId>
+		    <version>1.8.9</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>1.8.9</version>
+		</dependency>
+		
+
+		<dependency>
+			<groupId>com.dangdang</groupId>
+			<artifactId>sharding-jdbc-core</artifactId>
+			<version>1.4.1</version>
+		</dependency>
+		<dependency>  
+            <groupId>com.dangdang</groupId>  
+            <artifactId>sharding-jdbc-config-spring</artifactId>  
+            <version>1.4.1</version>  
+            <exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context-support</artifactId>
+				</exclusion>
+			</exclusions>
+        </dependency> 
+        
+		<dependency>
+		    <groupId>org.codehaus.groovy</groupId>
+		    <artifactId>groovy-all</artifactId>
+		    <version>2.4.7</version>
+		</dependency>
+         
+		<dependency>
+		    <groupId>org.apache.curator</groupId>
+		    <artifactId>curator-framework</artifactId>
+		    <version>2.10.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.curator</groupId>
+		    <artifactId>curator-recipes</artifactId>
+		    <version>2.10.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>2.9.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.5</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka_2.11</artifactId>
+			<version>0.10.1.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.storm</groupId>
+		    <artifactId>storm-kafka</artifactId>
+		    <version>1.0.2</version>
+		</dependency>
+	
+	<dependency>
+    <groupId>org.mongodb</groupId>
+    <artifactId>mongo-java-driver</artifactId>
+    <version>3.1.0</version>
+</dependency>
+<dependency>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-mongodb</artifactId>
+    <version>1.8.0.RELEASE</version>
+</dependency>
+		
+	</dependencies>
+</project>

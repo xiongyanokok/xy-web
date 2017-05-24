@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- redis 连接池配置 -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+		<!-- 最大连接数 -->
+	    <property name="maxTotal" value="200" />
+	    <!-- 最大空闲连接数 -->  
+	    <property name="maxIdle" value="30" />
+	    <!-- 最大等待毫秒数 -->  
+	    <property name="maxWaitMillis" value="30000" />
+	    <!-- 向调用者输出“链接”资源时，是否检测是有有效，如果无效则从连接池中移除，并尝试获取继续获取。设为true，一个挂都不能用 -->  
+	    <property name="testOnBorrow" value="false" />
+	    <!-- 向连接池“归还”链接时，是否检测“链接”对象的有效性。 -->  
+	    <property name="testOnReturn" value="true" />  
+	</bean>
+
+	<!-- redis 哨兵模式配置 -->
+	<bean id="redisPool" class="redis.clients.jedis.JedisSentinelPool">
+		<constructor-arg index="0" value="master2" />
+		<constructor-arg index="1">
+			<set>
+				<value>10.4.12.100:26384</value>
+				<value>10.4.12.101:26384</value>
+				<value>10.4.12.102:26384</value>
+			</set>
+		</constructor-arg>
+		<constructor-arg index="2" ref="jedisPoolConfig" />
+	</bean>
+
+	<!-- RedisConfig -->
+	<bean id="redisConfig" class="com.xy.web.generator.RedisConfig">
+		<property name="redisPool" ref="redisPool" />
+	</bean>
+
+
+	<!-- ZookeeperConfig -->
+	<bean id="zookeeperConfig" class="com.xy.web.generator.ZookeeperConfig">
+		<property name="serverLists" value="127.0.0.1:2181" />
+	</bean>
+
+
+	<!-- IdGenerator -->
+	<bean id="idGenerator" class="com.xy.web.generator.IdGenerator">
+		<property name="redisConfig" ref="redisConfig" />
+		<property name="zookeeperConfig" ref="zookeeperConfig" />
+		<property name="business" value="lesson" />
+		<property name="key" value="order" />
+	</bean>
+</beans>

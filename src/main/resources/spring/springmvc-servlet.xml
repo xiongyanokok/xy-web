@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd   
+          http://www.springframework.org/schema/context   
+          http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/mvc   
+          http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    
+	<!-- 扫描com.hexun.px.controller包，自动实例化带@controller注释的实例 -->
+	<context:component-scan base-package="com.xy.web.controller" use-default-filters="false">
+	   	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+	</bean>
+	
+	<!-- 处理responseBody 里面日期类型 -->  
+	<mvc:annotation-driven>  
+        <mvc:message-converters>  
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> 
+            	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+						<value>application/json; charset=UTF-8</value>
+					</list>
+				</property> 
+				<!-- 日期类型格式化 -->
+                <property name="objectMapper">  
+                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">  
+                        <property name="dateFormat">  
+                            <bean class="java.text.SimpleDateFormat">  
+                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />  
+                            </bean>  
+                        </property>  
+                    </bean>  
+                </property>  
+            </bean>  
+        </mvc:message-converters>  
+    </mvc:annotation-driven>
+	
+</beans>

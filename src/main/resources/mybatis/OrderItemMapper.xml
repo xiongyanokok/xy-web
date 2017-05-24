@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xy.web.mapper.OrderItemMapper">
+	
+  	<resultMap id="BaseResultMap" type="com.xy.web.model.OrderItem">
+	    <result column="order_id" property="orderId" />
+	    <result column="user_id" property="userId" />
+  	</resultMap>
+  	
+  	<!-- 表所有字段 -->
+  	<sql id="Base_Column_List">
+  		order_id, user_id
+  	</sql>
+  	
+  	<!-- 根据主键查询 -->
+  	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    	select 
+    	<include refid="Base_Column_List" />
+    	from t_order_item
+		where order_id = #{orderId}
+  	</select>
+  	
+  	<!-- 新增数据库记录 -->
+  	<insert id="insert" parameterType="com.xy.web.model.OrderItem">
+	    insert into t_order_item
+	    	<trim prefix="(" suffix=")" suffixOverrides=",">
+				order_id,
+				user_id,
+		    </trim>
+	    values
+	     	<trim prefix="(" suffix=")" suffixOverrides=",">
+				#{orderId},
+				#{userId},
+		    </trim>
+  	</insert>
+  	
+  	<!-- 根据主键动态更新数据库记录 -->
+  	<update id="updateByPrimaryKeySelective" parameterType="com.xy.web.model.OrderItem">
+    	update t_order_item
+    	<set>
+			<if test="orderId != null">
+    			order_id = #{orderId},
+  			</if>
+			<if test="userId != null">
+    			user_id = #{userId},
+  			</if>
+    	</set>
+    	where order_id = #{orderId}
+  	</update>
+  	
+	<!-- 根据map查询对象 -->
+  	<select id="getOrderItem" resultMap="BaseResultMap" parameterType="java.util.Map">
+  		select
+        <include refid="Base_Column_List"/>
+        from t_order_item
+        <where>
+
+        </where>
+  	</select>
+  
+  	<!-- 根据map查询集合 -->
+  	<select id="queryOrderItemByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+  		select
+        <include refid="Base_Column_List"/>
+        from t_order_item
+        <where>
+            	    
+        </where>
+        <if test="orderBy != null">
+        	order by ${orderBy}
+        </if>
+  	</select>
+  	
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- 启动对@AspectJ注解的支持 -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 配置事务的传播特性
+        REQUIRED 如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务
+        SUPPORTS 如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行
+    -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" rollback-for="Exception" read-only="false"/>
+            <tx:method name="add*" rollback-for="Exception" read-only="false"/>
+            <tx:method name="insert*" rollback-for="Exception" read-only="false"/>
+            <tx:method name="update*" rollback-for="Exception" read-only="false"/>
+            <tx:method name="delete*" rollback-for="Exception" read-only="false"/>
+            <tx:method name="batch*" rollback-for="Exception" read-only="false"/>
+            <tx:method name="cancel*" rollback-for="Exception" read-only="false"/>
+            <tx:method name="*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 配置事务 切入点 -->
+    <aop:config proxy-target-class="true">
+    	<aop:advisor pointcut="execution(* com.xy.web.service..*.*(..))" advice-ref="txAdvice"/>
+    </aop:config>
+
+</beans>
