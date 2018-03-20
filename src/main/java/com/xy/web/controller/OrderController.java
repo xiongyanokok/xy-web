@@ -33,13 +33,13 @@ public class OrderController extends BaseController {
     @Autowired
     private OrderService orderService;
     
-    @Autowired
-    private MongoTemplate mongoTemplate;
+    //@Autowired
+    //private MongoTemplate mongoTemplate;
     
     @RequestMapping(value = "/mongodb", method = {RequestMethod.GET})
     @ResponseBody
 	public String mongodb(Model model) {
-    	mongoTemplate.getDb();
+    	//mongoTemplate.getDb();
     	return "mongodb";
     }
     

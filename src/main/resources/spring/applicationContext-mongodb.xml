@@ -9,8 +9,8 @@
         http://www.springframework.org/schema/data/mongo
         http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 
-	<mongo:mongo-client id="mongo" replica-set="10.0.150.212:9804,10.0.150.205:9803,10.0.190.49:9805,10.0.202.121:9805">
-		<!-- 每个IP的连接数 -->
+	<!-- <mongo:mongo-client id="mongo" replica-set="10.0.150.212:9804,10.0.150.205:9803,10.0.190.49:9805,10.0.202.121:9805">
+		每个IP的连接数
 		<mongo:client-options connections-per-host="100"
 			threads-allowed-to-block-for-connection-multiplier="50"
 			connect-timeout="5000" max-wait-time="2000" socket-keep-alive="true"
@@ -21,6 +21,6 @@
 	
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongoDbFactory" />
-	</bean>
+	</bean> -->
 
 </beans>

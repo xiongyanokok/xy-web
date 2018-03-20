@@ -25,7 +25,7 @@ public abstract class BeforeHandler extends AbstractHandler {
 	@Override
 	public Object intercept(Object proxy, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
 		beforeInvoke(proxy, method, args);
-		return method.invoke(getTargetObject(), args);
+		return methodProxy.invoke(getTargetObject(), args);
 	}
 
 }
